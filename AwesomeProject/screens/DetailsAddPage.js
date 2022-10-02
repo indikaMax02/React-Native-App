@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 
-import {View, Text,ScrollView,Image} from 'react-native';
+import {View, Text,ScrollView,Image, Alert} from 'react-native';
+
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {NativeBaseProvider,Box,Button,Flex,VStack,Center,HStack, TextArea,Input} from "native-base"
+
 
 
 
@@ -31,6 +33,29 @@ function DetailsAddPage(){
          });
      
         }
+
+        const openGalary=()=>{
+          const options={
+               storageOptions : {
+                  path : 'images',
+                  mediaType : 'photo',
+ 
+               },
+               includeBase64 : true,
+          }   
+          launchImageLibrary(options , response=>{
+                
+                 if(response.didCancel){
+                    console.log("user cancelld image picker");
+                 }else{
+                   let source = {
+                      uri: 'data:image/jpeg;base64,' + response.assets[0].base64
+                  };
+                     setImage(source)
+                 }
+          });
+      
+         }
 
 
 
@@ -136,7 +161,7 @@ function DetailsAddPage(){
                                 >Open Camera</Button>
                                 <Button
                                   onPress={()=>{
-                                    // imageGalary();
+                                    openGalary();
                                   }}
                                  
                                 >Add Image</Button>
@@ -195,18 +220,29 @@ function DetailsAddPage(){
                  </Box>
 
                  <Box height='40' flexDirection='column' alignItems='center'  >
-                                <Button width='60%' mb='4' mt='4'>Open Camera</Button>
+                                <Button width='60%' mb='4' mt='4'
+                                
+                                onPress={async()=>{
+                                  try {
+                                    const response = await fetch('http://192.168.8.101:4000/manage/addDetails',
+                                    {method: 'POST',
+                                     
+                                  
+                                  });
+                                    // const json = await response.json();
+                                    console.log(response)
+                                  } catch (error) {
+                                    console.error(error);
+                                  }
+                                }}
+                                
+                                >Save Details</Button>
                                 <Button width='60%' bg='red.500'>Add Image</Button>
                    </Box>
                    </ScrollView>
 
      </Box>
             
-
-     
-
-     
-
         </NativeBaseProvider>
 
     )
