@@ -9,70 +9,99 @@ import {NativeBaseProvider,Box,Button,Flex,VStack,Center,HStack, TextArea,Input}
 function DetailsAddPage(){
     const[image,setImage]=useState('');
 
-
-
-    const openCamera=() =>{
-          const options = {
-              storageOptions:{
-                 path: 'images',
+     const openCamera=()=>{
+         const options={
+              storageOptions : {
+                 path : 'images',
                  mediaType : 'photo',
+
               },
-              includeBase64: true,
-          };
-    
-    launchCamera(options , response =>{
-      console.log(response.fileName)
-        if(response.didCancel){
-            console.log("user cancelld image picker");
-        }else if (response.error){
-            console.log("image picker error",response.error);
-        
-        }else if(response.customButton){
-            console.log("image picker error",response.customButton);
-        }else{
-            console.log("pick uped")
-            let source = {
-                uri: 'data:image/jpeg;base64,' + response.assets[0].base64
-              };
-              console.log(source)
-            setImage(source)
+              includeBase64 : true,
+         }   
+         launchCamera(options , response=>{
+               
+                if(response.didCancel){
+                   console.log("user cancelld image picker");
+                }else{
+                  let source = {
+                     uri: 'data:image/jpeg;base64,' + response.assets[0].base64
+                 };
+                    setImage(source)
+                }
+         });
+     
         }
-    });
+
+
+
+
+
+
+//     const openCamera=() =>{
+//           const options = {
+//               storageOptions:{
+//                  path: 'images',
+//                  mediaType : 'photo',
+//               },
+//               includeBase64: true,
+//           };
     
-    };
-
-
-
-    const imageGalary=() =>{
-      const options = {
-          storageOptions:{
-             path: 'images',
-             mediaType : 'photo',
-          },
-          includeBase64: true,
-      };
-
-launchImageLibrary(options , response =>{
-  console.log(response.fileName)
-    if(response.didCancel){
-        console.log("user cancelld image picker");
-    }else if (response.error){
-        console.log("image picker error",response.error);
+//     launchCamera(options , response =>{
+//       console.log(response.fileName)
+//         if(response.didCancel){
+//             console.log("user cancelld image picker");
+//         }else if (response.error){
+//             console.log("image picker error",response.error);
+        
+//         }else if(response.customButton){
+//             console.log("image picker error",response.customButton);
+//         }else{
+//             console.log("pick uped")
+//             let source = {
+//                 uri: 'data:image/jpeg;base64,' + response.assets[0].base64
+//               };
+//               console.log(source)
+//             setImage(source)
+//         }
+//     });
     
-    }else if(response.customButton){
-        console.log("image picker error",response.customButton);
-    }else{
-        console.log("pick uped")
-        let source = {
-            uri: 'data:image/jpeg;base64,' + response.assets[0].base64
-          };
-          console.log(source)
-        setImage(source)
-    }
-});
+//     };
 
-};
+
+
+//     const imageGalary=() =>{
+//       const options = {
+//           storageOptions:{
+//              path: 'images',
+//              mediaType : 'photo',
+//           },
+//           includeBase64: true,
+//       };
+
+// launchImageLibrary(options , response =>{
+//   console.log(response.fileName)
+//     if(response.didCancel){
+//         console.log("user cancelld image picker");
+//     }else if (response.error){
+//         console.log("image picker error",response.error);
     
+//     }else if(response.customButton){
+//         console.log("image picker error",response.customButton);
+//     }else{
+//         console.log("pick uped")
+//         let source = {
+//             uri: 'data:image/jpeg;base64,' + response.assets[0].base64
+//           };
+//           console.log(source)
+//         setImage(source)
+//     }
+// });
+
+// };
+    
+
+
+
 
 
 
@@ -98,15 +127,16 @@ launchImageLibrary(options , response =>{
 
                    <Box height='40' flexDirection='column' justifyContent='space-around'>
                                 <Button
-                                   onPress={()=>{
+                                   onPress={async()=>{
                                     openCamera();
-                        
+                                   
+                                    
 
                                    }}
                                 >Open Camera</Button>
                                 <Button
                                   onPress={()=>{
-                                    imageGalary();
+                                    // imageGalary();
                                   }}
                                  
                                 >Add Image</Button>
@@ -179,27 +209,7 @@ launchImageLibrary(options , response =>{
 
         </NativeBaseProvider>
 
-
-           
-
-
-        
-             
-                 
-                
-            
-                       
-          
-         
-
-
-
-
-          
-           
-
-      
-    
     )
 }
+
 export default DetailsAddPage
