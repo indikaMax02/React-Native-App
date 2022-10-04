@@ -4,7 +4,7 @@ import {View, Text,ScrollView,Image, Alert} from 'react-native';
 
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {NativeBaseProvider,Box,Button,Flex,VStack,Center,HStack, TextArea,Input} from "native-base"
-
+var Environment = require('../environment')
 
 
 
@@ -224,7 +224,7 @@ function DetailsAddPage(){
                                 
                                 onPress={async()=>{
                                   try {
-                                    const response = await fetch('http://192.168.8.101:4000/manage/addDetails',
+                                    const response = await fetch(baseUrl+'/manage/addDetails',
                                     {method: 'POST',
                                      
                                   
@@ -237,7 +237,9 @@ function DetailsAddPage(){
                                 }}
                                 
                                 >Save Details</Button>
-                                <Button width='60%' bg='red.500'>Add Image</Button>
+                                <Button width='60%' bg='red.500' onPress={()=>{
+                                   console.log(Environment.BASE_URL)
+                                }}>Add Image</Button>
                    </Box>
                    </ScrollView>
 
