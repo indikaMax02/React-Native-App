@@ -224,11 +224,11 @@ function DetailsAddPage(){
                                 
                                 onPress={async()=>{
                                   try {
-                                    const response = await fetch(baseUrl+'/manage/addDetails',
-                                    {method: 'POST',
+                                  //   const response = await fetch(baseUrl+'/manage/addDetails',
+                                  //   {method: 'POST',
                                      
                                   
-                                  });
+                                  // });
                                     // const json = await response.json();
                                     console.log(response)
                                   } catch (error) {
