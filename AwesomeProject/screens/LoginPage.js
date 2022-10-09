@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import {TouchableOpacity}from "react-native";
 import { Box, Text, Heading, VStack, FormControl, Input, Link, Button, HStack, Center, NativeBaseProvider } from "native-base";
 
@@ -7,6 +7,10 @@ import { Box, Text, Heading, VStack, FormControl, Input, Link, Button, HStack, C
 
 function LoginPage(){
      const navigation = useNavigation();
+     const[status,setStatus]=useState('');
+     const[token,setToken]=useState('');
+     const[username,setUserName]=useState('');
+     const[password, setPassword]=useState('')
 
     return(
 
@@ -27,11 +31,22 @@ function LoginPage(){
           <VStack space={3} mt="5">
             <FormControl>
               <FormControl.Label>Email ID</FormControl.Label>
-              <Input />
+              <Input 
+                onChangeText={(text)=>{
+                     setUserName(text)
+                }}
+                value={username}
+              />
             </FormControl>
             <FormControl>
               <FormControl.Label>Password</FormControl.Label>
-              <Input type="password" />
+              <Input type="password"
+                onChangeText={(pass)=>{
+                  setPassword(pass)
+             }}
+             value={password}
+              
+              />
               <Link _text={{
               fontSize: "xs",
               fontWeight: "500",
@@ -42,7 +57,42 @@ function LoginPage(){
             </FormControl>
             <Button mt="2" colorScheme="indigo"
                onPress={() =>{
-                navigation.navigate('DashBoard', { name: 'Jane' })
+
+                if(username != '' &&  password!=''){
+                  var myHeaders = new Headers();
+                  myHeaders.append("Content-Type", "application/json");
+                  
+                  var raw = JSON.stringify({
+                    "username":  username,
+                    "password":  password
+                  });
+                  
+                  var requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                  };
+                  
+                  fetch("https://fakestoreapi.com/auth/login", requestOptions)
+                    .then(response => response.json())
+             
+                    
+                  .then(result =>{
+                      console.log(result)
+                     navigation.navigate('DashBoard', { name: 'Jane' })
+                   
+                  })
+                    .catch(error => alert('error', error));
+  
+
+                }else{
+                    alert("Enter the Username And Password")
+                }
+
+                           
+                 
+               
                }}
             >
               Sign in

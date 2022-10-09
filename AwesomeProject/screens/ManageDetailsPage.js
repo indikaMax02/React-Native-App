@@ -1,29 +1,22 @@
-import React from 'react';
-import {SafeAreaView, View, FlatList, StyleSheet,  StatusBar} from "react-native"
+import React, { useEffect,useState } from 'react';
+import {SafeAreaView, View, FlatList, StyleSheet,ActivityIndicator,  StatusBar,Image} from "react-native"
 
 
-import {Text, Box, Heading, AspectRatio, Image, Center, HStack, Stack, NativeBaseProvider } from "native-base";
-
-const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    }
-    
-    
-  ];
-
+import {Text, Box, Heading, AspectRatio, Center, HStack, Stack, NativeBaseProvider } from "native-base";
   
   
-  const Example = () => {
+  const Example = (props) => {
+
+
+
+
+
+   useEffect(()=>{
+            
+           console.log("wada")
+   },[])
+
+
     return <Box alignItems="center">
         <Box maxW="80" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
         borderColor: "coolGray.600",
@@ -36,9 +29,12 @@ const DATA = [
       }}>
           <Box>
             <AspectRatio w="100%" ratio={16 / 9}>
-              <Image source={{
-              uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg"
-            }} alt="image" />
+            <Image
+        style={styles.tinyLogo}
+        source={{
+          uri: props.image
+        }}
+      />
             </AspectRatio>
             <Center bg="violet.500" _dark={{
             bg: "violet.400"
@@ -53,7 +49,7 @@ const DATA = [
           <Stack p="4" space={3}>
             <Stack space={2}>
               <Heading size="md" ml="-1">
-                The Garden City
+                {props.title}
               </Heading>
               <Text fontSize="xs" _light={{
               color: "violet.500"
@@ -81,31 +77,64 @@ const DATA = [
       </Box>;
   };
 
-
-
-  const Item = ({ title }) => (
+  const Item = ({ title , image}) => (
     <View style={styles.item}>
-         <Example/>
+         <Example title={title} image={image}/>
     </View>
   );
 
 
 
 function ManageDetailsPage(){
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+
+
+
+  useEffect(()=>{
+      getDetails();
+  },[])
+
+
+  const getDetails = async () => {
+    try {
+     const response = await fetch('http://jsonplaceholder.typicode.com/photos?_start=0&_limit=5');
+     const json = await response.json();
+      setData(json);
+
+    // console.log(json)
+
+
+   } catch (error) {
+     console.error(error);
+   } finally {
+     setLoading(false);
+   }
+ }
+
+
+
+
     const renderItem = ({ item }) => (
-        <Item title={item.title} />
+        <Item title={item.title} image={item.url} />
       );
 
    return (
 
     <NativeBaseProvider>
-                <SafeAreaView>
-                    
+                <SafeAreaView >
+                
+
+            {isLoading ? <ActivityIndicator/> : ( 
+                
                 <FlatList
-                data={DATA}
+                data={data}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 />
+            )}
+
+
                 </SafeAreaView>
     </NativeBaseProvider>
 

@@ -59,7 +59,7 @@ function CustomeAlert(props){
        <Alert
 
               
-                          w="100%"  colorScheme="success" status="success">
+                          w="100%"   status="success">
                           <VStack space={2} flexShrink={1} w="100%">
                           <HStack flexShrink={1} space={2} alignItems="center" justifyContent="center">
                           <HStack space={2} flexShrink={1} alignItems="center">
@@ -79,9 +79,6 @@ function CustomeAlert(props){
 
      </View>
 
-
-
-     
   )
 };
 

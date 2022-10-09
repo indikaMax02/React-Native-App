@@ -20,7 +20,7 @@ function DetailsAddPage(){
     const[title,setTitle]=useState('');
     const[desc,setDesc]=useState('');
 
-    const delayChageTime=()=>{
+    const timeDelay=()=>{
          setChage(false);
     }
 
@@ -95,7 +95,8 @@ function DetailsAddPage(){
 
                                    }}
                                 >Open Camera</Button>
-                                <Button
+                                <Button 
+                                   color="green.500"
                                   onPress={()=>{
                                     openGalary();
                                   }}
@@ -202,8 +203,9 @@ function DetailsAddPage(){
                                     })
                                     .then((response) => response.json())
                                     .then((json) => {
-                                              setChage(true)
-                                              setTimeout(delayChageTime,3000)
+                                      alert("saved OK")
+                                              // setChage(true)
+                                              // setTimeout(timeDelay,2000)
                                           
                                      })
                                      .catch((err)=>{
@@ -225,7 +227,7 @@ function DetailsAddPage(){
                  
       
        <CustomeAlert 
-          bgcolor={"blue"}
+          bgcolor={"black"}
           isAnimate={change}
           text="Details Addedd Completed"
        />
