@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DetailsAddPage from './DetailsAddPage';
 import ManageDetailsPage from './ManageDetailsPage';
@@ -25,7 +23,7 @@ function DashBoard(){
           ),
         }} 
         />
-                <Tab.Screen name="Settings" component={ManageDetailsPage} />
+              <Tab.Screen name="Settings" component={ManageDetailsPage} />
               </Tab.Navigator>
         
         
