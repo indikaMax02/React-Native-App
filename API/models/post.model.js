@@ -4,23 +4,15 @@ const mongoose=require('mongoose')
 
 const postSchema=new mongoose.Schema({
 
-    userId : {
-        type: ObjectId,
-        required: true
-    },
-    date : {
+    title : {
         type: String,
         required: true
     },
-    time : {
+    desc : {
         type: String,
-        required :  true,
+        required: true
     },
-    title: {
-        type :  String,
-        required : true
-    },
-    body: {
+    image: {
         type : Object,
         required : true
     }

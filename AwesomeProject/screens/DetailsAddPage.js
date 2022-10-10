@@ -16,9 +16,10 @@ import CustomeAlert from '../components/alerts/CustomAlert';
 
 function DetailsAddPage(){
     const[change,setChage]=useState(false);
-    const[image,setImage]=useState('');
+    const[image,setImage]=useState(null);
     const[title,setTitle]=useState('');
     const[desc,setDesc]=useState('');
+    const[form,setForm]=useState(null);
 
     const timeDelay=()=>{
          setChage(false);
@@ -47,26 +48,69 @@ function DetailsAddPage(){
      
         }
 
-        const openGalary=()=>{
+        const openGalary=async()=>{
           const options={
-               storageOptions : {
-                  path : 'images',
-                  mediaType : 'photo',
+                  title : 'Select Image',
+                  type : 'library',
+                  options : {
+                     selectionLimit : 1,
+                     mediaType : 'photo',
+                     includeBase64 : false,
+                  },
  
-               },
-               includeBase64 : true,
-          }   
-          launchImageLibrary(options , response=>{
+               }
+             const images= await launchImageLibrary(options);
+             setImage(images.assets[0].uri)
+             console.log(images.assets[0].uri)
+             const formdata=new FormData();
+             formdata.append('body',{
+              uri : images.assets[0].uri,
+              type : images.assets[0].type,
+              name : images.assets[0].fileName
+             })
+          
+             formdata.append("title", "hello gm all i am indika");
+             formdata.append("desc", "hello");
+            
+             var requestOptions = {
+              method: 'POST',
+              body: formdata,
+              redirect: 'follow'
+            };
+            
+            fetch(`${BASE_URL}`+'/manage/addDetails', requestOptions)
+              .then(response => response.text())
+              .then(result => console.log(result))
+              .catch(error => console.log('error', error));
+             
+            
+        
+            //  let res = await fetch(
+            //   `${BASE_URL}`+'/manage',
+            //    {
+            //      method: 'post',
+            //      headers: {
+            //       'Content-Type': 'multipart/form-data; ',
+            //     },
+            //      body: form
                 
-                 if(response.didCancel){
-                    console.log("user cancelld image picker");
-                 }else{
-                   let source = {
-                      uri: 'data:image/jpeg;base64,' + response.assets[0].base64
-                  };
-                     setImage(source)
-                 }
-          });
+            //    }
+            //  );
+            //  let responseJson = await res.json();
+            //  if (responseJson.status == 1) {
+            //    alert('Upload Successful');
+            //  }
+          // launchImageLibrary(options , response=>{
+                
+          //        if(response.didCancel){
+          //           console.log("user cancelld image picker");
+          //        }else{
+          //          let source = {
+          //             uri: 'data:image/jpeg;base64,' + response.assets[0].base64
+          //         };
+          //            setImage(source)
+          //        }
+          // });
       
          }
 
@@ -95,22 +139,22 @@ function DetailsAddPage(){
 
                                    }}
                                 >Open Camera</Button>
+
                                 <Button 
                                    color="green.500"
                                   onPress={()=>{
                                     openGalary();
                                   }}
                                  
-                                >Add Image</Button>
+                                >open Galary</Button>
                    </Box>
 
                  <Box bg='white' rounded='xl' height='100%' width='60%' alignItems='center'>
                     
                        
                            <Image 
-                          
-                          source={image}
-                            
+                        
+                          source={{uri:image}}
                            style={{
                           overflow : 'hidden',
                             height : '100%',
@@ -170,50 +214,11 @@ function DetailsAddPage(){
 
                  <Box height='40' flexDirection='column' alignItems='center'  >
                                 <Button width='60%' mb='4' mt='4'
-                                
+
+
+                            
                                 onPress={async()=>{
-                                      // fetch('https://jsonplaceholder.typicode.com/todos/1')
-                                      //    .then(response => response.json())
-                                      //    .then(json => console.log(json))
-
-                                    // fetch('http://192.168.8.100:4000'+'/manage/addDetails',
-                                    // {method: 'POST'})
-                                   
-                                    // .then((response) =>response.json())
-                                    // .then((json)=>{
-                                    //     console.log(json.code)
-                                    //    // fadeIn();
-                                    // })
-                                    //  .catch((error) => {
-                                    //       console.error(error);
-                                    //  });
                                   
-
-                                    fetch('https://jsonplaceholder.typicode.com/posts', {
-                                      method: 'POST',
-                                      headers: {
-                                        Accept: 'application/json',
-                                        'Content-Type': 'application/json'
-                                      },
-                                      body: JSON.stringify({
-                                            "title" : {title},
-                                            "desc" : {desc},
-                                            "image" : {image}
-                                      })
-                                    })
-                                    .then((response) => response.json())
-                                    .then((json) => {
-                                      alert("saved OK")
-                                              // setChage(true)
-                                              // setTimeout(timeDelay,2000)
-                                          
-                                     })
-                                     .catch((err)=>{
-                                         alert(err)
-                                     })
-
-
-
 
                                 }}
                                 

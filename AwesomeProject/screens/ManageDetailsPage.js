@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react';
 import {SafeAreaView, View, FlatList, StyleSheet,ActivityIndicator,  StatusBar,Image} from "react-native"
-
+import {BASE_URL} from "@env";
 
 import {Text, Box, Heading, AspectRatio, Center, HStack, Stack, NativeBaseProvider } from "native-base";
   
@@ -32,7 +32,7 @@ import {Text, Box, Heading, AspectRatio, Center, HStack, Stack, NativeBaseProvid
             <Image
         style={styles.tinyLogo}
         source={{
-          uri: props.image
+          uri: `data:image/png;base64,${props.image}`,
         }}
       />
             </AspectRatio>
@@ -60,8 +60,7 @@ import {Text, Box, Heading, AspectRatio, Center, HStack, Stack, NativeBaseProvid
               </Text>
             </Stack>
             <Text fontWeight="400">
-              Bengaluru (also called Bangalore) is the center of India's high-tech
-              industry. The city is also known for its parks and nightlife.
+                {props.desc}
             </Text>
             <HStack alignItems="center" space={4} justifyContent="space-between">
               <HStack alignItems="center">
@@ -77,9 +76,9 @@ import {Text, Box, Heading, AspectRatio, Center, HStack, Stack, NativeBaseProvid
       </Box>;
   };
 
-  const Item = ({ title , image}) => (
+  const Item = ({ title ,desc, image  }) => (
     <View style={styles.item}>
-         <Example title={title} image={image}/>
+         <Example title={title} desc={desc} image={image}/>
     </View>
   );
 
@@ -93,16 +92,19 @@ function ManageDetailsPage(){
 
   useEffect(()=>{
       getDetails();
-  },[])
+  })
 
 
   const getDetails = async () => {
     try {
-     const response = await fetch('http://jsonplaceholder.typicode.com/photos?_start=0&_limit=5');
-     const json = await response.json();
-      setData(json);
-
-    // console.log(json)
+  
+    fetch(`${BASE_URL}`+'/manage/getAllPost')
+    .then(response=>response.json())
+    .then((json)=>{
+        
+        setData(json)
+    })
+    .catch(err=>alert(err))
 
 
    } catch (error) {
@@ -116,7 +118,7 @@ function ManageDetailsPage(){
 
 
     const renderItem = ({ item }) => (
-        <Item title={item.title} image={item.url} />
+        <Item title={item.title} desc={item.desc} image={item.image} />
       );
 
    return (
@@ -125,7 +127,11 @@ function ManageDetailsPage(){
                 <SafeAreaView >
                 
 
-            {isLoading ? <ActivityIndicator/> : ( 
+            {isLoading ? <ActivityIndicator style={{
+                marginTop : 300
+                
+
+            }}/> : ( 
                 
                 <FlatList
                 data={data}

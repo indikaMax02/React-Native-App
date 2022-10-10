@@ -30,7 +30,7 @@ function LoginPage(){
   
           <VStack space={3} mt="5">
             <FormControl>
-              <FormControl.Label>Email ID</FormControl.Label>
+              <FormControl.Label>User Name</FormControl.Label>
               <Input 
                 onChangeText={(text)=>{
                      setUserName(text)
@@ -57,38 +57,40 @@ function LoginPage(){
             </FormControl>
             <Button mt="2" colorScheme="indigo"
                onPress={() =>{
+                navigation.navigate('DashBoard')
 
-                if(username != '' &&  password!=''){
-                  var myHeaders = new Headers();
-                  myHeaders.append("Content-Type", "application/json");
+                // if(username != '' &&  password!=''){
+
+                //   var myHeaders = new Headers();
+                //   myHeaders.append("Content-Type", "application/json");
                   
-                  var raw = JSON.stringify({
-                    "username":  username,
-                    "password":  password
-                  });
+                //   var raw = JSON.stringify({
+                //     "username":  username,
+                //     "password":  password
+                //   });
                   
-                  var requestOptions = {
-                    method: 'POST',
-                    headers: myHeaders,
-                    body: raw,
-                    redirect: 'follow'
-                  };
+                //   var requestOptions = {
+                //     method: 'POST',
+                //     headers: myHeaders,
+                //     body: raw,
+                //     redirect: 'follow'
+                //   };
                   
-                  fetch("https://fakestoreapi.com/auth/login", requestOptions)
-                    .then(response => response.json())
+                //   fetch("https://fakestoreapi.com/auth/login", requestOptions)
+                //     .then(response => response.json())
              
                     
-                  .then(result =>{
-                      console.log(result)
-                     navigation.navigate('DashBoard', { name: 'Jane' })
+                //   .then(result =>{
+                    
                    
-                  })
-                    .catch(error => alert('error', error));
+                   
+                //   })
+                //     .catch(error => alert('error', error));
   
 
-                }else{
-                    alert("Enter the Username And Password")
-                }
+                // }else{
+                //     alert("Enter the Username And Password")
+                // }
 
                            
                  

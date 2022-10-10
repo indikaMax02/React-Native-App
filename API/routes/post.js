@@ -39,6 +39,9 @@ router.get('/getPost/:id',async(req,res)=>{
 
 router.post('/createPost',async(req,res)=>{
 
+   
+
+
     var form = new multiparty.Form();
     form.parse(req, async(err, fields, files)=> {
 
@@ -50,6 +53,8 @@ router.post('/createPost',async(req,res)=>{
         title : fields.title[0],
         body : fields.body[0]
     })
+    
+    // console.log(typeof(form))
 
  const response=await post.save()
  response!=null ? res.json({code:'200',message:'create post successfull',data:null}) :
@@ -77,7 +82,7 @@ router.post('/createPost',async(req,res)=>{
         }
     });
 
-})
+  })
 
 
 router.put('/updatePost/:id',(req,res)=>{
