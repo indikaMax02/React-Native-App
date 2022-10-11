@@ -26,24 +26,53 @@ function DetailsAddPage(){
          setChage(false);
     }
 
-     const openCamera=()=>{
+     const openCamera=async()=>{
+
+
+
+  //     const options={
+  //       // title : 'Select Image',
+  //       // type : 'library',
+  //       options : {
+  //          selectionLimit : 1,
+  //          mediaType : 'photo',
+  //          includeBase64 : false,
+  //       },
+
+  //    }
+  //  const images= await launchCamera(options);
+  
+  //  setImage(images.assets[0].uri)
+  //  setImageDetails(images)
+
+
+  //   }
+
+
+
+
+
+
+
+
          const options={
               storageOptions : {
                  path : 'images',
                  mediaType : 'photo',
 
               },
-              includeBase64 : true,
+              includeBase64 : false,
          }   
          launchCamera(options , response=>{
                
                 if(response.didCancel){
                    console.log("user cancelld image picker");
                 }else{
-                  let source = {
-                     uri: 'data:image/jpeg;base64,' + response.assets[0].base64
-                 };
-                    setImage(source)
+                //   let source = {
+                //      uri: 'data:image/jpeg;base64,' + response.assets[0].base64
+                //  };
+                    setImage(response.assets[0].uri)
+                    setImageDetails(response)
                 }
          });
      
@@ -108,7 +137,7 @@ function DetailsAddPage(){
 <ScrollView>
                  
 
-                 <Box height='30%' width="100%"   flexDirection='row' alignItems='center' justifyContent='space-around'>
+                 <Box height='30%' width="100%" marginTop={10}   flexDirection='row' alignItems='center' justifyContent='space-around'>
 
                    <Box height='40' flexDirection='column' justifyContent='space-around'>
                                 <Button
@@ -121,7 +150,7 @@ function DetailsAddPage(){
                                 >Open Camera</Button>
 
                                 <Button 
-                                   color="green.500"
+                                   bgColor={'violet.700'}
                                   onPress={()=>{
                                     openGalary();
                                   }}
@@ -193,13 +222,13 @@ function DetailsAddPage(){
                
 
                  <Box height='40' flexDirection='column' alignItems='center'  >
-                                <Button width='60%' mb='4' mt='4'
+                                <Button width='90%' mb='4' mt='4' bgColor={'green.400'}
 
 
                             
                                 onPress={async()=>{
                                       
-                                      console.log(images.assets[0].uri)
+                                      // console.log(images.assets[0].uri)
                                       const formdata=new FormData();
                                       formdata.append('body',{
                                         uri : imageDetails.assets[0].uri,
@@ -207,8 +236,8 @@ function DetailsAddPage(){
                                         name : imageDetails.assets[0].fileName
                                       })
                                     
-                                      formdata.append("title", "hello gm all i am indika");
-                                      formdata.append("desc", "hello");
+                                      formdata.append("title", title);
+                                      formdata.append("desc", desc);
                                       
                                       var requestOptions = {
                                         method: 'POST',
@@ -218,27 +247,35 @@ function DetailsAddPage(){
                                       
                                       fetch(`${BASE_URL}`+'/manage/addDetails', requestOptions)
                                         .then(response => response.text())
-                                        .then(result => console.log(result))
+                                        .then(result => {
+                                          alert("Details Saved Ok ")
+                                          setImage(null);
+                                          setImageDetails(null);
+                                          setTitle('');
+                                          setDesc('');
+                                        
+                                        })
                                         .catch(error => console.log('error', error));
-             
+                                      
+                                        
 
                                 }}
                                 
                                 >Save Details</Button>
-                                <Button width='60%' bg='red.500' onPress={()=>{
+                                <Button width='90%' bg='red.500' onPress={()=>{
 
                               
-                                }}>Add Image</Button>
+                                }}>Go to Main Menu</Button>
                    </Box>
                    </ScrollView>
 
                  
       
-       <CustomeAlert 
+       {/* <CustomeAlert 
           bgcolor={"black"}
           isAnimate={change}
           text="Details Addedd Completed"
-       />
+       /> */}
 
               
 

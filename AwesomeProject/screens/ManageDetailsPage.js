@@ -56,7 +56,7 @@ import {Text, Box, Heading, AspectRatio, Center, HStack, Stack, NativeBaseProvid
             }} _dark={{
               color: "violet.400"
             }} fontWeight="500" ml="-0.5" mt="-1">
-                The Silicon Valley of India.
+                2022-10-11
               </Text>
             </Stack>
             <Text fontWeight="400">
@@ -67,7 +67,7 @@ import {Text, Box, Heading, AspectRatio, Center, HStack, Stack, NativeBaseProvid
                 <Text color="coolGray.600" _dark={{
                 color: "warmGray.200"
               }} fontWeight="400">
-                  6 mins ago
+                  1 mins ago
                 </Text>
               </HStack>
             </HStack>
@@ -96,22 +96,13 @@ function ManageDetailsPage(){
 
 
   const getDetails = async () => {
-    try {
-  
-    fetch(`${BASE_URL}`+'/manage/getAllPost')
+     fetch(`${BASE_URL}`+'/manage/getAllPost')
     .then(response=>response.json())
     .then((json)=>{
         
         setData(json)
+        setLoading(false);
     })
-    .catch(err=>alert(err))
-
-
-   } catch (error) {
-     console.error(error);
-   } finally {
-     setLoading(false);
-   }
  }
 
 

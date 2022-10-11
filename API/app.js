@@ -25,7 +25,7 @@ con.on("open",()=>{
 app.use(express.json());
 
  app.use('/manage',manage);
-// app.use('/user',auth,user);
+ app.use('/user',auth,user);
 // app.use('/manage',manage);
 
 

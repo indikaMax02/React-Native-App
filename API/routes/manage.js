@@ -10,9 +10,8 @@ router.post('/addDetails',async(req,res)=>{
 
           if(files!=undefined){
             var img = fs.readFileSync(files.body[0].path);
-            console.log(files)
             var encode_img = img.toString('base64');
-            console.log(files)
+          
             //  const body=  Buffer.from(encode_img,'base64')
              
              const post=new Post({
@@ -42,20 +41,6 @@ router.get('/getAllPost',async(req,res)=>{
             
       }
       res.json(array)
-
-
-    //   var image = response.body.toString('base64');
-    // const buffer = Buffer.from(image, 'base64');
-  
-  
-    //    res.json({
-    //       date : response.date,
-    //       time : response.time,
-    //       title : response.title,
-    //       body :res.send(buffer)
-                 
-    //    })
-  
   
   })
   

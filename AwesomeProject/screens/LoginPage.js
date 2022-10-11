@@ -57,40 +57,40 @@ function LoginPage(){
             </FormControl>
             <Button mt="2" colorScheme="indigo"
                onPress={() =>{
-                navigation.navigate('DashBoard')
+                
+                if(username != '' &&  password!=''){
 
-                // if(username != '' &&  password!=''){
-
-                //   var myHeaders = new Headers();
-                //   myHeaders.append("Content-Type", "application/json");
+                  var myHeaders = new Headers();
+                  myHeaders.append("Content-Type", "application/json");
                   
-                //   var raw = JSON.stringify({
-                //     "username":  username,
-                //     "password":  password
-                //   });
+                  var raw = JSON.stringify({
+                    "username":  username,
+                    "password":  password
+                  });
                   
-                //   var requestOptions = {
-                //     method: 'POST',
-                //     headers: myHeaders,
-                //     body: raw,
-                //     redirect: 'follow'
-                //   };
+                  var requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                  };
                   
-                //   fetch("https://fakestoreapi.com/auth/login", requestOptions)
-                //     .then(response => response.json())
+                  fetch("https://fakestoreapi.com/auth/login", requestOptions)
+                    .then(response => response.json())
              
                     
-                //   .then(result =>{
-                    
+                  .then(result =>{
+
+                    navigation.navigate('DashBoard')
+    
                    
-                   
-                //   })
-                //     .catch(error => alert('error', error));
+                  })
+                    .catch(error => alert('error', error));
   
 
-                // }else{
-                //     alert("Enter the Username And Password")
-                // }
+                }else{
+                    alert("Enter the Username And Password")
+                }
 
                            
                  

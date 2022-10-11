@@ -23,6 +23,19 @@ function DashBoard(){
           ),
         }} 
         />
+
+<Tab.Screen 
+                 
+                 name="VIEW FORM"
+                 component={ManageDetailsPage}
+                 options={{
+                   tabBarLabel: 'View',
+                   tabBarIcon: () => (
+                     <FontAwesome5 name='info-circle' size={24} color="black" />
+                   ),
+                 }} 
+                 />
+
               <Tab.Screen name="Settings" component={ManageDetailsPage} />
               </Tab.Navigator>
         
