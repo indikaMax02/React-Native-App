@@ -20,6 +20,7 @@ function DetailsAddPage(){
     const[title,setTitle]=useState('');
     const[desc,setDesc]=useState('');
     const[form,setForm]=useState(null);
+    const[imageDetails,setImageDetails]=useState(null)
 
     const timeDelay=()=>{
          setChage(false);
@@ -60,30 +61,9 @@ function DetailsAddPage(){
  
                }
              const images= await launchImageLibrary(options);
+            
              setImage(images.assets[0].uri)
-             console.log(images.assets[0].uri)
-             const formdata=new FormData();
-             formdata.append('body',{
-              uri : images.assets[0].uri,
-              type : images.assets[0].type,
-              name : images.assets[0].fileName
-             })
-          
-             formdata.append("title", "hello gm all i am indika");
-             formdata.append("desc", "hello");
-            
-             var requestOptions = {
-              method: 'POST',
-              body: formdata,
-              redirect: 'follow'
-            };
-            
-            fetch(`${BASE_URL}`+'/manage/addDetails', requestOptions)
-              .then(response => response.text())
-              .then(result => console.log(result))
-              .catch(error => console.log('error', error));
-             
-            
+             setImageDetails(images)
         
             //  let res = await fetch(
             //   `${BASE_URL}`+'/manage',
@@ -218,13 +198,36 @@ function DetailsAddPage(){
 
                             
                                 onPress={async()=>{
-                                  
+                                      
+                                      console.log(images.assets[0].uri)
+                                      const formdata=new FormData();
+                                      formdata.append('body',{
+                                        uri : imageDetails.assets[0].uri,
+                                        type : imageDetails.assets[0].type,
+                                        name : imageDetails.assets[0].fileName
+                                      })
+                                    
+                                      formdata.append("title", "hello gm all i am indika");
+                                      formdata.append("desc", "hello");
+                                      
+                                      var requestOptions = {
+                                        method: 'POST',
+                                        body: formdata,
+                                        redirect: 'follow'
+                                      };
+                                      
+                                      fetch(`${BASE_URL}`+'/manage/addDetails', requestOptions)
+                                        .then(response => response.text())
+                                        .then(result => console.log(result))
+                                        .catch(error => console.log('error', error));
+             
 
                                 }}
                                 
                                 >Save Details</Button>
                                 <Button width='60%' bg='red.500' onPress={()=>{
-                                   console.log(Environment.BASE_URL)
+
+                              
                                 }}>Add Image</Button>
                    </Box>
                    </ScrollView>
